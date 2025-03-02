@@ -1,0 +1,41 @@
+import foodModel from "../models/food.model";
+import { Request, Response } from "express";
+
+export const createFood = async (req: Request, res: Response) => {
+  try {
+    const foodData = req.body;
+    const newFood = await foodModel.create(foodData);
+    res.status(200).json({ message: "Successfully created category", newFood });
+  } catch (error) {
+    res.status(500).json({ message: "error in createFood", error });
+  }
+};
+
+export const getFood = async (req: Request, res: Response) => {
+  try {
+    const newFood = await foodModel.find();
+    res.status(200).json({ message: "Successfully created category", newFood });
+  } catch (error) {
+    res.status(500).json({ message: "error in getFood", error });
+  }
+};
+
+export const putFood = async (req: Request, res: Response) => {
+  try {
+    const { _id, foodName } = req.body;
+    const newFood = await foodModel.updateOne({ _id }, { foodName });
+    res.status(200).json({ message: "Successfully created category", newFood });
+  } catch (error) {
+    res.status(500).json({ message: "error in putFood", error });
+  }
+};
+
+export const deleteFood = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.body;
+    const newFood = await foodModel.deleteOne({ _id });
+    res.status(200).json({ message: "Successfully created category", newFood });
+  } catch (error) {
+    res.status(500).json({ message: "error in deleteFood", error });
+  }
+};

@@ -1,0 +1,13 @@
+node_modules/
+
+*.log
+
+.env
+
+*.tsbuildinfo
+
+dist/
+build/
+
+.vscode/
+.idea/

@@ -20,6 +20,16 @@ export const getFood = async (req: Request, res: Response) => {
   }
 };
 
+export const getOneFood = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params;
+    const newFood = await foodModel.find({ _id });
+    res.status(200).json({ message: "Successfully get food", newFood });
+  } catch (error) {
+    res.status(500).json({ message: "error in getFood", error });
+  }
+};
+
 export const putFood = async (req: Request, res: Response) => {
   try {
     const { _id, foodName } = req.body;

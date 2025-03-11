@@ -24,7 +24,8 @@ export const getCagegory = async (req: Request, res: Response) => {
 
 export const putCagegory = async (req: Request, res: Response) => {
   try {
-    const { _id, categoryName } = req.body;
+    const { _id } = req.params;
+    const { categoryName } = req.body;
     await foodCotegoryModel.updateOne({ _id }, { categoryName });
     res.status(200).json({ message: "updated" });
   } catch (error) {
@@ -34,7 +35,7 @@ export const putCagegory = async (req: Request, res: Response) => {
 
 export const deleteCagegory = async (req: Request, res: Response) => {
   try {
-    const { _id } = req.body;
+    const { _id } = req.params;
     await foodCotegoryModel.deleteOne({ _id });
     res.status(200).json({ message: "deleted" });
   } catch (error) {

@@ -4,7 +4,11 @@ import userModel from "../models/user.model";
 export const signUp = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
-    const newUser = await userModel.create(userData);
+    console.log(userData);
+    const newUser = await userModel.create({
+      email: userData.user,
+      password: userData.password,
+    });
     res.status(200).json({ message: "Successfully created user", newUser });
   } catch (error) {
     res.status(500).json({ message: "error in signUp", error });

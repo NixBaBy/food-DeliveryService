@@ -12,7 +12,7 @@ const foodRoute = express.Router();
 foodRoute.post("/", createFood);
 foodRoute.get("/", getFood);
 foodRoute.get("/:_id", getOneFood);
-foodRoute.put("/:id", putFood);
+foodRoute.put("/:_id", putFood);
 foodRoute.delete("/:_id", deleteFood);
 
 export default foodRoute;

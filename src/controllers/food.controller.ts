@@ -4,11 +4,11 @@ import { Request, Response } from "express";
 export const createFood = async (req: Request, res: Response) => {
   try {
     const foodData = req.body;
+    console.log(foodData);
     const newFood = await foodModel.create({
       foodName: foodData.foodName,
       price: foodData.foodPrice,
-      image:
-        "https://res.cloudinary.com/dhvtog3m2/image/upload/v1741750194/55bc133b8044d28cf937929f2e9f99ce_mu4jcd.png",
+      image: foodData.image,
       ingredients: foodData.Ingredients,
       category: foodData.category,
     });

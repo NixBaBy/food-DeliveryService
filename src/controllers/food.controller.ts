@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 export const createFood = async (req: Request, res: Response) => {
   try {
     const foodData = req.body;
-    console.log(foodData);
     const newFood = await foodModel.create({
       foodName: foodData.foodName,
       price: foodData.foodPrice,
@@ -41,9 +40,7 @@ export const getOneFood = async (req: Request, res: Response) => {
 export const putFood = async (req: Request, res: Response) => {
   try {
     const { foodName, price, ingredients, category } = req.body;
-    console.log(req.body);
     const { _id } = req.params;
-    console.log(_id);
     const newFood = await foodModel.updateOne(
       { _id },
       { foodName, price, ingredients, category }
@@ -52,7 +49,6 @@ export const putFood = async (req: Request, res: Response) => {
     //   { _id },
     //   { $set: { foodName, price, ingredients, category } }
     // );
-    console.log("new food", newFood);
     res.status(200).json({ message: "Successfully created category", newFood });
   } catch (error) {
     res.status(500).json({ message: "error in putFood", error });

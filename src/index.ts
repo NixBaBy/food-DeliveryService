@@ -17,7 +17,7 @@ const port = process.env.PORT;
 
 app.use("/food-category", categoryRoute);
 app.use("/foods", foodRoute);
-app.use("/sign-up", userRoute);
+app.use("/auth", userRoute);
 app.use("/food-order", foodOrderRoute);
 
 app.listen(port, () => {

@@ -10,7 +10,7 @@ type userSchemaType = {
   password: string;
   phoneNumber: string;
   address: string;
-  isVerified: { type: Boolean; default: false };
+  orderedFoods: string[];
 };
 
 const userSchema = new Schema(
@@ -24,7 +24,7 @@ const userSchema = new Schema(
       enum: Object.values(UserRole),
       default: UserRole.USER,
     },
-    isVerified: { type: Boolean, default: false },
+    orderedFoods: { type: [Schema.ObjectId], ref: "foodOrder" },
   },
   { timestamps: true }
 );

@@ -3,6 +3,9 @@ import userModel from "../models/user.model";
 
 import bcrypt, { compareSync, hashSync } from "bcrypt";
 
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { sendEmail } from "../util/send-email";
+
 export const signUp = async (req: Request, res: Response) => {
   try {
     const { user: email, password } = req.body;
@@ -51,6 +54,52 @@ export const signIn = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Successfully created user", user });
   } catch (error) {
     res.status(500).json({ message: "Error in signUp", error: true });
+  }
+};
+
+export const forgetPassword = async (req: Request, res: Response) => {
+  const jwSecret = process.env.JWT_SECRET;
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(401).json({ message: "burtgelgui hereglegch baina" });
+      return;
+    }
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      res.status(401).json({ message: "burtgelgui hereglegch baina" });
+      return;
+    }
+
+    const token = jwt.sign({ id: user._id }, jwSecret!, { expiresIn: "1h" });
+
+    await sendEmail(email, token);
+    res.status(200).json({ message: "amjilttai" });
+  } catch (error) {
+    res.status(500).json({ message: "Error in forgetPassword" });
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const jwtSecret = process.env.JWT_SECRET;
+  try {
+    const { password, token } = req.body;
+
+    if (!token) {
+      res.status(401).json({ message: "token baihgui baina" });
+      return;
+    }
+    const decoded = jwt.verify(token, jwtSecret!) as JwtPayload;
+    const id = decoded.id;
+
+    const hashedPassword = hashSync(password, 10);
+
+    const user = await userModel.findByIdAndUpdate(id, {
+      password: hashedPassword,
+    });
+    res.status(200).json({ message: "tanii password amjilttai soligdloo" });
+  } catch (error) {
+    res.status(500).json({ message: "Error in resetPassword" });
   }
 };
 

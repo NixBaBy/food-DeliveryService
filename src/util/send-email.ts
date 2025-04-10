@@ -19,7 +19,7 @@ export const sendEmail = async (email: string, token: string) => {
     subject: "Reset your password",
     html: `
   <h1>Your password reset link</h1>
-  <a href="http://localhost:3000/reset-password?id=${token}">click here</a>
+  <a href="http://localhost:3000/reset-password?id=${token}">click here</a> 
   `,
   };
   await transporter.sendMail(mailOption);
